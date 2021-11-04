@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import Todos from "./Todos";
 
+
 export default function Home({ navigation }) {
   const [task, setTask] = useState(null);
   const [todos, setTodos] = useState([]);
@@ -44,6 +45,7 @@ export default function Home({ navigation }) {
           <Todos todos={todos} delete={() => deleteTodo()} />
         </View>
       </View>
+      
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
