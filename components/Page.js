@@ -42,9 +42,9 @@ export default function Page() {
         })}
         >
 
-        <Tab.Screen name={first} component={First} />
-        <Tab.Screen name={second} component={Second} />
-        <Tab.Screen name={third} component={Third} />
+        <Tab.Screen name={first} component={First} options={{ headerShown: false }} />
+        <Tab.Screen name={second} component={Second} options={{ headerShown: false }} />
+        <Tab.Screen name={third} component={Third} options={{ headerShown: false }} />
 
       </Tab.Navigator>
     </NavigationContainer>
