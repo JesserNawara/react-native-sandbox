@@ -1,18 +1,13 @@
 import React, { useState, useRef } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
-  Image,
-  Animated,
   FlatList,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import Post from "./Post.js"; 
 
-import POSTS from "./../data/Posts.js";
+import POSTS from "../../data/Posts.js";
 
 const { width, height } = Dimensions.get("screen");
 
@@ -39,6 +34,7 @@ export default function Test2() {
           
           <FlatList
             data={POSTS}
+            showsVerticalScrollIndicator={false}
             keyExtractor={(item) => item.id}
             renderItem={({ item }, index) => {
               return (

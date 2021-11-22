@@ -1,456 +1,205 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
-  Dimensions,
-  Image,
   Animated,
+  TouchableOpacity,
+  Image,
   StyleSheet,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
-import normalize from "react-native-normalize";
-import { Badge } from "react-native-paper";
 
-const { width, height } = Dimensions.get("screen");
+export default function Test() {
+  const [reactionOpen, setReactionOpen] = useState(false);
 
-export default function Second() {
-  const navigation = useNavigation();
+  // ________________________ OPEN REACTION BAR ANIMATION
 
+  const likeAnimation = useRef(new Animated.Value(0)).current;
+  const loveAnimation = useRef(new Animated.Value(0)).current;
+  const hahaAnimation = useRef(new Animated.Value(0)).current;
+  const wowAnimation = useRef(new Animated.Value(0)).current;
+  const sadAnimation = useRef(new Animated.Value(0)).current;
+  const angryAnimation = useRef(new Animated.Value(0)).current;
 
-  const buttonAnimation = useRef(new Animated.Value(0)).current;
-  const icon1Animation = useRef(new Animated.Value(1)).current;
-  const icon2Animation = useRef(new Animated.Value(1)).current;
-  const icon3Animation = useRef(new Animated.Value(1)).current;
-  const icon4Animation = useRef(new Animated.Value(1)).current;
-
-  const cartAlert = () => {
-    if (shoppingCart === 0) {
-      return null;
-    } else {
-      return (
-        <Badge
-          style={{
-            alignSelf: "flex-end",
-            backgroundColor: "red",
-            top: normalize(-15, "height"),
-          }}
-        >
-          <Text style={{ color: "white", fontWeight: "bold" }}>
-            {shoppingCart}
-          </Text>
-        </Badge>
-      );
-    }
+  const openReaction = () => {
+    setReactionOpen(!reactionOpen);
+    animateAngry();
+    animateSad();
+    animateWow();
+    animateHaha();
+    animateLove();
+    animateLike();
   };
 
-  const [selectedScreen, setSelectedScreen] = useState("home");
-  const [shoppingCart, setShoppingCart] = useState(0);
 
-  const animateBtn = () => {
-    Animated.timing(buttonAnimation, {
-      toValue: -30,
+  const animateLike = () => {
+    Animated.timing(likeAnimation, {
+      toValue: reactionOpen ? 65 : 0,
+      duration: 600,
+      useNativeDriver: true,
+    }).start();
+  };
+  const animateLove = () => {
+    Animated.timing(loveAnimation, {
+      toValue: reactionOpen ? 175 : 0,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
+  const animateHaha = () => {
+    Animated.timing(hahaAnimation, {
+      toValue: reactionOpen ? 285 : 0,
+      duration: 400,
+      useNativeDriver: true,
+    }).start();
+  };
+  const animateWow = () => {
+    Animated.timing(wowAnimation, {
+      toValue: reactionOpen ? 395 : 0,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(buttonAnimation, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
+    }).start();
   };
-
-  const animateIcon1 = () => {
-    Animated.timing(icon1Animation, {
-      toValue: 1.35,
+  const animateSad = () => {
+    Animated.timing(sadAnimation, {
+      toValue: reactionOpen ? 505 : 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+  const animateAngry = () => {
+    Animated.timing(angryAnimation, {
+      toValue: reactionOpen ? 615 : 0,
       duration: 100,
       useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(icon1Animation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
+    }).start();
   };
 
-  const animateIcon2 = () => {
-    Animated.timing(icon2Animation, {
-      toValue: 1.35,
-      duration: 100,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(icon2Animation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
-  };
-
-  const animateIcon3 = () => {
-    Animated.timing(icon3Animation, {
-      toValue: 1.35,
-      duration: 100,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(icon3Animation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
-  };
-
-  const animateIcon4 = () => {
-    Animated.timing(icon4Animation, {
-      toValue: 1.35,
-      duration: 100,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(icon4Animation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    });
-  };
-
-  const tabColor = (screen) => {
-    setSelectedScreen(screen);
-    // navigation.navigate(screen)
-  };
-
-  const addTocart = () => {
-    setShoppingCart(shoppingCart + 1);
-    animateBtn();
-  };
-
-  const deleteFromCart = () => {
-    shoppingCart === 0 ? alert("its empty") : setShoppingCart(shoppingCart - 1);
-  };
-
-
-  
-return (  <View
-  style={{
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FAF3ED",
-  }}
->
-  <View
-    style={{
-      height: 100,
-      width,
-      flexDirection: "row",
-      justifyContent: "space-around",
-    }}
-  >
-    <TouchableOpacity
-      onPress={addTocart}
+  return (
+    <View
       style={{
-        height: 50,
-        width: 70,
-        borderRadius: 40,
-        backgroundColor: "green",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 30,
-          color: "#fff",
-        }}
-      >
-        +
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity
-      onPress={deleteFromCart}
-      style={{
-        height: 50,
-        width: 70,
-        borderRadius: 40,
-        backgroundColor: "red",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 30,
-          color: "#fff",
-        }}
-      >
-        -
-      </Text>
-    </TouchableOpacity>
-  </View>
-  <Text>{shoppingCart}</Text>
-
-  <View
-    style={[
-      {
         flex: 1,
-        justifyContent: "flex-end",
-
-        width,
-        height: 160,
-        alignItems: "center",
-        marginBottom: normalize(10),
-      },
-    ]}
-  >
-    <Animated.View style={[styles.btn, { translateY: buttonAnimation }]}>
-      <TouchableOpacity
-        onPress={animateBtn}
-        style={{
-          height: width > 765 ? 90 : 60,
-          width: width > 765 ? 90 : 60,
-          backgroundColor: "#000",
-          borderRadius: 50,
-          justifyContent: "center",
-          zIndex: 1,
-        }}
-      >
-        {cartAlert()}
-
-        <Ionicons
-          style={{
-            fontSize: hp("4%"),
-            color: "#fff",
-            alignSelf: "center",
-            position: "absolute",
-          }}
-          name="cart-outline"
-        />
-      </TouchableOpacity>
-    </Animated.View>
-
-    <ImageBackground
-      source={{
-        uri: "https://res.cloudinary.com/djsfdhzsd/image/upload/v1636988786/Group_9814_1_vafo2k.png",
-      }}
-      style={{
-        width: width - 30,
-        height: 100,
-        borderRadius: 30,
-        position: "absolute",
         justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <View
         style={{
+          justifyContent: "flex-start",
+          alignItems: "center",
           flexDirection: "row",
-          justifyContent: "space-between",
+          width: "100%",
         }}
       >
-        <Animated.View
-          style={{
-            left: normalize(13),
-            transform: [
-              { scaleY: icon1Animation },
-              { scaleX: icon1Animation },
-            ],
+        <TouchableOpacity
+          onPress={() => {
+            openReaction()
           }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              tabColor("home");
-              animateIcon1();
-            }}
-          >
-            <Image
-              source={
-                selectedScreen === "home"
-                  ? {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637067156/Group_9844_sw7a0v.png",
-                    }
-                  : {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637067156/Group_9843_gy70rj.png",
-                    }
-              }
-              style={{
-                height: normalize(37, "height"),
-                width: normalize(37, "width"),
-                marginHorizontal: normalize(10),
-              }}
-            />
-            <Text style={styles.text}>Home</Text>
-          </TouchableOpacity>
-        </Animated.View>
-
-        <Animated.View
           style={{
-            right: normalize(18),
-            transform: [
-              { scaleY: icon2Animation },
-              { scaleX: icon2Animation },
-            ],
+            height: 50,
+            width: 50,
+            borderRadius: 50,
+            backgroundColor: "red",
+            zIndex: 1,
           }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              tabColor("parfums");
-              animateIcon2();
+        ></TouchableOpacity>
+        <TouchableOpacity>
+          <Animated.Image
+            style={[
+              styles.like,
+              { transform: [{ translateX: likeAnimation }] },
+            ]}
+            source={{
+              uri: "https://res.cloudinary.com/jessssss/image/upload/v1637155096/thumps-up_ybyrwj.png",
             }}
-          >
-            <Image
-              source={
-                selectedScreen === "parfums"
-                  ? {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637067130/Group_9845_1_od9epz.png",
-                    }
-                  : {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637067130/Group_9821_1_gtb6yi.png",
-                    }
-              }
-              style={{
-                height: normalize(37, "height"),
-                width: normalize(37, "width"),
-                marginHorizontal: normalize(10),
-              }}
-            />
-            <Text style={styles.text}>Parfums</Text>
-          </TouchableOpacity>
-        </Animated.View>
-
-        <Animated.View
-          style={{
-            left: normalize(25),
-            transform: [
-              { scaleY: icon3Animation },
-              { scaleX: icon3Animation },
-            ],
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              tabColor("magic");
-              animateIcon3();
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Animated.Image
+            style={[
+              styles.love,
+              { transform: [{ translateX: loveAnimation }] },
+            ]}
+            source={{
+              uri: "https://res.cloudinary.com/jessssss/image/upload/v1637154989/love2_mucp8g.png",
             }}
-          >
-            <Image
-              source={
-                selectedScreen === "magic"
-                  ? {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637069757/Group_9869_1_wglvxx.png",
-                    }
-                  : {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637069756/Group_9869_e9svm2.png",
-                    }
-              }
-              style={{
-                height: normalize(37, "height"),
-                width: normalize(37, "width"),
-                marginHorizontal: normalize(10),
-              }}
-            />
-            <Text style={styles.text}>Magic</Text>
-          </TouchableOpacity>
-        </Animated.View>
-        <Animated.View
-          style={{
-            right: normalize(15),
-            transform: [
-              { scaleY: icon4Animation },
-              { scaleX: icon4Animation },
-            ],
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              tabColor("heart");
-              animateIcon4();
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Animated.Image
+            style={[
+              styles.haha,
+              { transform: [{ translateX: hahaAnimation }] },
+            ]}
+            source={{
+              uri: "https://res.cloudinary.com/jessssss/image/upload/v1637154989/haha2_luwryi.png",
             }}
-          >
-            <Image
-              source={
-                selectedScreen === "heart"
-                  ? {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637068391/Group_9867_yayqwn.png",
-                    }
-                  : {
-                      uri: "https://res.cloudinary.com/jessssss/image/upload/v1637068251/Group_9866_wr0z2i.png",
-                    }
-              }
-              style={{
-                height: normalize(37, "height"),
-                width: normalize(37, "width"),
-                marginHorizontal: normalize(10),
-              }}
-            />
-            <Text style={styles.text}>Heart</Text>
-          </TouchableOpacity>
-        </Animated.View>
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Animated.Image
+            style={[styles.wow, { transform: [{ translateX: wowAnimation }] }]}
+            source={{
+              uri: "https://res.cloudinary.com/jessssss/image/upload/v1637154989/wow2_stapqi.png",
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Animated.Image
+            style={[styles.sad, { transform: [{ translateX: sadAnimation }] }]}
+            source={{
+              uri: "https://res.cloudinary.com/jessssss/image/upload/v1637154989/sad2_ib2pfx.png",
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Animated.Image
+            style={[
+              styles.angry,
+              { transform: [{ translateX: angryAnimation }] },
+            ]}
+            source={{
+              uri: "https://res.cloudinary.com/jessssss/image/upload/v1637154990/angry2_eqqqb6.png",
+            }}
+          />
+        </TouchableOpacity>
       </View>
-    </ImageBackground>
-
-
-  </View>
-</View>
-
-)
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-  btn: {
-    zIndex: 1,
-    bottom: 50,
+  reaction: {
+    width: 30,
+    height: 30,
   },
-  icon: {
-    justifyContent: 'center',
-    height: 80
+  like: {
+    height: 40,
+    width: 40,
+    right: 45,
   },
-  text: {
-    bottom: 2,
-    alignSelf: 'center',
-    textAlign: "center",
-    fontSize: 10,
-    fontFamily: 'serif',
-    fontWeight: '500',
-    color: "#8A624E"
-  }
+  love: {
+    height: 40,
+    width: 40,
+    right: 145,
+  },
+  haha: {
+    height: 40,
+    width: 40,
+    right: 245,
+  },
+  wow: {
+    height: 40,
+    width: 40,
+    right: 345,
+  },
+  sad: {
+    height: 40,
+    width: 40,
+    right: 445,
+  },
+  angry: {
+    height: 40,
+    width: 40,
+    right: 545,
+  },
 });
-
-// const animateIcon1 = () => {
-//   Animated.timing(icon1Animation, {
-//     toValue: 30,
-//     duration: 300,
-//     useNativeDriver: true,
-//   }).start(() => {
-//     Animated.timing(icon1Animation, {
-//       toValue: 0,
-//       duration: 300,
-//       useNativeDriver: true,
-//     }).start();
-//   });
-// }
-
-// const animateIcon3 = () => {
-//   Animated.timing(icon3Animation, {
-//     toValue: -1,
-//     duration: 800,
-//     useNativeDriver: true,
-//   }).start(() => {
-//     icon3Animation.setValue(0);
-//   });
-// }
-
-// const interpolateRotating = icon3Animation.interpolate({
-//   inputRange: [0, 1],
-//   outputRange: ['0deg', '360deg'],
-// });
-
-// const animatedStyle = {
-//   transform: [
-//     {
-//       rotate: interpolateRotating,
-//     },
-//   ],
-// };
